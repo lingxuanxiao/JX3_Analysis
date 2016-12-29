@@ -27,7 +27,7 @@
 #|八列分别为：龙吟，龙牙，破风，穿云，战八方，灭，流血（Dot跳数），破血（Dot跳数，多层|
 #|Dot每跳视为多个单层Dot同时跳）                                                      |
 #|------------------------------------------------------------------------------------|
-Simulation = function(GCD, DOT, TIME, S = 10000){
+Simulation = function(GCD, DOT, TIME, S = 1000){
 	#----------------------------------------------------------------------------------
 	#第一部分：指示物设定
 	#第一类：技能CD，按顺序分别为龙吟，战八方，灭，公共CD
@@ -233,9 +233,8 @@ for (i in 1:19){
 		Out[[i]][[j]][['Detail']] = Result
 		Out[[i]][[j]][['Total']] = c(sum(Result[1:2, 1:6]), sum(Result[3:4, 1:6]))
 		Out[[i]][[j]][['Equal']] = matrix(c(Result[1, ] + 1.2 * Result[2, ], Result[3, ] + 1.2 * Result[4, ]), 2)
-		Out[[i]][[j]][['Compose']] = 
-		Out[[i]][[j]][['CoverRate']] = 
-		Out[[i]][[j]][['Dot']] = 
+		Out[[i]][[j]][['Compose']] = matrix(c((Result[1, 1:6] + Result[2, 1:6])/sum(Result[1:2, 1:6]), (Result[3, 1:6] + Result[4, 1:6])/sum(Result[3:4, 1:6])), 2)
+		Out[[i]][[j]][['CoverRate']] = matrix(c(Result[2, 1:6]/(Result[1, 1:6] + Result[2, 1:6]), Result[4, 1:6]/(Result[3, 1:6] + Result[4, 1:6])), 2)
 	}
 }
 
