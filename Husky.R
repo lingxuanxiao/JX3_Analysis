@@ -170,7 +170,7 @@ Simulation = function(GCD, DOT, TIME, S = 1000){
 		}
 		Jineng_sum_1 = Jineng_sum_1 + Jineng
 		Initialize()
-		set.seed(1234 + i)
+		#set.seed(1234 + i)
 		#循环2（等龙吟CD好）
 		while (Time > 0){
 			#执行技能判定：
@@ -223,6 +223,7 @@ Jiasu = rbind(c(24, 23, 23, 22, 22, 21, 21, 20, 20, 19, 19), c(32, 31, 30, 30, 2
 #时间以半分钟为单位，计算从1min到10min的战斗
 Time = c(2:20/2*60*16)
 #组织输出
+set.seed(1234)
 Out = list()
 Result = matrix()
 for (i in 1:19){
