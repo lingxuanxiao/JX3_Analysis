@@ -210,6 +210,16 @@ Simulation = function(GCD, DOT, TIME, S = 1000){
 	return(rbind(Jineng_sum_1, Jineng_sum_2)/S)
 }
 #======================================================================================
+#程序样例
+set.seed(8888)							#初始化随机数发生器
+Simulation(22, 30, 4800, 1000)			#208加速等级，时长5min，模拟1000次
+#输出结果
+#       [,1]   [,2] [,3]   [,4]   [,5]   [,6]    [,7]    [,8]
+#[1,] 31.086 31.670    1 18.891  7.793 13.784 174.997 421.606
+#[2,]  9.481 59.239    0 24.132 21.924  0.000   0.000   0.000
+#[3,] 33.704 35.883    1 16.168  7.260  0.000 171.060 431.214
+#[4,]  9.196 59.852    0 26.927 26.199  0.000   0.000   0.000
+#======================================================================================
 #模拟计算
 #计算对象：分技能分风虎技能数统计
 #计算指标：技能总数（不含Dot）；等效技能数；直接技能比例；特定技能风虎覆盖率；Dot构成
@@ -219,29 +229,35 @@ Simulation = function(GCD, DOT, TIME, S = 1000){
 #GCD  24   23   23   22   22   21   21   20   20    19    19
 #DOT  32   31   30   30   29   29   28   27   26    26    25
 #加速考虑所有可能的帧数组合
-Jiasu = rbind(c(24, 23, 23, 22, 22, 21, 21, 20, 20, 19, 19), c(32, 31, 30, 30, 29, 29, 28, 27, 26, 26, 25))
+#Jiasu = rbind(c(24, 23, 23, 22, 22, 21, 21, 20, 20, 19, 19), c(32, 31, 30, 30, 29, 29, 28, 27, 26, 26, 25))
 #时间以半分钟为单位，计算从1min到10min的战斗
-Time = c(2:20/2*60*16)
-#组织输出
-set.seed(1234)
-Out = list()
-Result = matrix()
-for (i in 1:19){
-	Out[[i]] = list()
-	for (j in 1:11){
-		Out[[i]][[j]] = list()
-		Result = Simulation(Jiasu[1, j], Jiasu[2, j], Time[i])
-		Out[[i]][[j]][['Detail']] = Result
-		Out[[i]][[j]][['Total']] = c(sum(Result[1:2, 1:6]), sum(Result[3:4, 1:6]))
-		Out[[i]][[j]][['Equal']] = matrix(c(Result[1, ] + 1.2 * Result[2, ], Result[3, ] + 1.2 * Result[4, ]), 2)
-		Out[[i]][[j]][['Compose']] = matrix(c((Result[1, 1:6] + Result[2, 1:6])/sum(Result[1:2, 1:6]), (Result[3, 1:6] + Result[4, 1:6])/sum(Result[3:4, 1:6])), 2)
-		Out[[i]][[j]][['CoverRate']] = matrix(c(Result[2, 1:6]/(Result[1, 1:6] + Result[2, 1:6]), Result[4, 1:6]/(Result[3, 1:6] + Result[4, 1:6])), 2)
-	}
-}
-
-
-
-
-
-
-
+#Time = c(2:20/2*60*16)
+#模拟结果输出
+#set.seed(1234)
+#Out = list()
+#Result = matrix()
+#for (i in 1:19){
+#	Out[[i]] = list()
+#	for (j in 1:11){
+#		Out[[i]][[j]] = list()
+#		Result = Simulation(Jiasu[1, j], Jiasu[2, j], Time[i])
+#		Out[[i]][[j]][['Detail']] = Result
+#		#Out[[i]][[j]][['Total']] = c(sum(Result[1:2, 1:6]), sum(Result[3:4, 1:6]))
+#		#Out[[i]][[j]][['Equal']] = matrix(c(Result[1, ] + 1.2 * Result[2, ], Result[3, ] + 1.2 * Result[4, ]), 2)
+#		#Out[[i]][[j]][['Compose']] = matrix(c((Result[1, 1:6] + Result[2, 1:6])/sum(Result[1:2, 1:6]), (Result[3, 1:6] + Result[4, 1:6])/sum(Result[3:4, 1:6])), 2)
+#		#Out[[i]][[j]][['CoverRate']] = matrix(c(Result[2, 1:6]/(Result[1, 1:6] + Result[2, 1:6]), Result[4, 1:6]/(Result[3, 1:6] + Result[4, 1:6])), 2)
+#	}
+#}
+#O = matrix(0, 19*11*4, 11)
+#for (i in 1:19){
+#	for (j in 1:11){
+#		for (k in 1:4){
+#			l = (i-1)*44+(j-1)*4+k
+#			O[l, 1] = Time[i]
+#			O[l, 2] = Jiasu[1, j]
+#			O[l, 3] = Jiasu[2, j]
+#			O[l, 4:11] = Out[[i]][[j]]$Detail[k,]
+#		}
+#	}
+#}
+#write.csv(O, file = "C:/Users/Feixiao_L/Desktop/Husky.csv", row.names = F, quote = F)
