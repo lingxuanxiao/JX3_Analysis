@@ -113,7 +113,7 @@ Simulation = function(GCD, DOT, TIME, S = 1000){
 		Dot[2] <<- 8 * DOT							#技能刷新破血的持续时间，破血每30帧一跳，一共8跳
 		Poxue <<- min(3, Poxue + 1)					#计算破血层数
 	}
-	#灭：无CD；触发GCD
+	#灭：CD7s；触发GCD
 	Mie = function(n = 6){
 		#技能统计部分
 		if (Fenghu > 0){Fenghu <<- Fenghu - 1; Jineng[2, n] <<- Jineng[2, n] + 1}else{Jineng[1, n] <<- Jineng[1, n] + 1}
