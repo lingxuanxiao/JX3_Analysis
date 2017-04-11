@@ -2,23 +2,23 @@
 #Author: Feixiao_L
 #======================================================================================
 #Core function
-Dot_effect = function(x, Time = 24, Begin = 6){
+Dot_effect = function(x, Time = 24, Begin = 6, Prop = 0.4){
 	P = matrix(0, 8, 8)
-	for(i in 3:7){P[i, i-1] = (1-x)/2; P[i, i] = (1-x)/2; P[i, 8] = x}
+	for(i in 3:7){P[i, i-1] = (1-x) * Prop; P[i, i] = (1-x) * Prop; P[i, 8] = x}
 	P[1, 1] = 1
-	P[8, 7] = (1-x)/2; P[8, 8] = (1+x)/2
-	P[2, 1] = 0.5; P[2, 2] = (1-x)/2; P[2, 8] = x/2
+	P[8, 7] = (1-x) * Prop; P[8, 8] = (1+x) * Prop
+	P[2, 1] = 0.5; P[2, 2] = (1-x) * Prop; P[2, 8] = x * Prop
 	Q = P; P = diag(8)
 	for(i in 1:Time){P = P %*% Q}
 	return(P[Begin+1, ])
 }
 
-Dot_renew = function(x, Time = 24, Begin = 6){
+Dot_renew = function(x, Time = 24, Begin = 6, Prop = 0.4){
 	P = matrix(0, 8, 8)
-	for(i in 2:6){P[i, i-1] = (1-x)/2; P[i, i] = (1-x)/2; P[i, 7] = x/2; P[i, 8] = x/2}
+	for(i in 2:6){P[i, i-1] = (1-x) * Prop; P[i, i] = (1-x) * Prop; P[i, 7] = x * Prop; P[i, 8] = x * Prop}
 	P[1, 1] = 1
-	P[7, 6] = (1-x)/2; P[7, 7] = 1/2; P[7, 8] = x/2
-	P[8, 7] = 1/2; P[8, 8] = 1/2
+	P[7, 6] = (1-x) * Prop; P[7, 7] = 1 * Prop; P[7, 8] = x * Prop
+	P[8, 7] = 1 * Prop; P[8, 8] = 1 * Prop
 	Q = P; P = diag(8)
 	for(i in 1:Time){P = P %*% Q}
 	return(P[Begin+1, ])
@@ -46,7 +46,7 @@ ddd = 0
 bbb = 0
 x = 0:1000/1000
 for(i in 1:1001){bb[i] = Dot_renew(x[i], 24)[1]; dd[i] = Dot_effect(x[i], 24)[1]; bbb[i] = Dot_renew(x[i], 15)[1]; ddd[i] = Dot_effect(x[i], 15)[1]}
-plot(x*100, dd, 'l', col = 'dark red', ylim = c(0, 0.2), xlab = 'Critical rate(%)', ylab = 'Propability of losing dot', main = 'Relations between propability of losing dot and critical rate')
+plot(x*100, dd, 'l', col = 'dark red', ylim = c(0, 0.12), xlab = 'Critical rate(%)', ylab = 'Propability of losing dot', main = 'Relations between propability of losing dot and critical rate')
 points(x*100, bb, 'l', col = 'gray20', lty = 2)
 points(x*100, ddd, 'l', col = 'dark blue')
 points(x*100, bbb, 'l', col = 'gray20', lty = 3)
